@@ -1,0 +1,138 @@
+    @Override
+    public SearchResponseDto search(Map<String, String> params) throws UnsupportedEncodingException {
+
+        ESRestaurantInfoSearchDto searchDto = new ESRestaurantInfoSearchDto(params);
+        Pageable pageable = PageRequest.of(searchDto.getPageNo(), searchDto.getPageSize());
+
+        BoolQueryBuilder filterBoolQueryBuilder = boolQuery();
+        BoolQueryBuilder shouldBoolQueryBuilder = boolQuery();
+
+        if ((searchDto.getLongitudeStart() != 0.0) && (searchDto.getLongitudeEnd() != 0.0)) {
+            filterBoolQueryBuilder.filter(QueryBuilders
+                    .rangeQuery("longitude")
+                    .from(searchDto.getLongitudeStart())
+                    .to(searchDto.getLongitudeEnd()));
+        }
+
+        if ((searchDto.getLatitudeStart() != 0.0) && (searchDto.getLatitudeEnd() != 0.0)) {
+            filterBoolQueryBuilder.filter(QueryBuilders
+                    .rangeQuery("latitude")
+                    .from(searchDto.getLatitudeStart())
+                    .to(searchDto.getLatitudeEnd()));
+        }
+
+        shouldBoolQueryBuilder
+                .should(matchQuery("restaurant_name", searchDto.getQueryString()).operator(Operator.OR))
+                .should(matchQuery("restaurant_name", searchDto.getQueryString()).operator(Operator.AND).boost(5.0f))
+                .should(matchPhraseQuery("restaurant_name", searchDto.getQueryString()).boost(25.0f));
+
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        queryBuilder
+                .withFilter(filterBoolQueryBuilder)
+                .withPageable(pageable)
+                .withQuery(shouldBoolQueryBuilder);
+
+        SearchHits<ESRestaurantInfo> articles = operations
+                .search(queryBuilder.build(), ESRestaurantInfo.class, IndexCoordinates.of("restaurant_info"));
+
+        List<SearchHit<ESRestaurantInfo>> searchHitList = articles.getSearchHits();
+        ArrayList<ESRestaurantInfo> list = new ArrayList<>();
+
+        for (SearchHit<ESRestaurantInfo> item : searchHitList) {
+            list.add(item.getContent());
+        }
+        List<Object> results = Arrays.asList(toDto(list).toArray());
+
+        int totalCount = (int) articles.getTotalHits();
+
+        return new SearchResponseDto(results, pageable, totalCount);
+    }
+
+
+
+
+    GET /restaurant_info/_search
+    {
+      "from": 0,
+      "size": 100,
+      "query": {
+        "bool": {
+          "should": [
+            {
+              "match": {
+                "restaurant_name": {
+                  "query": "칼국수",
+                  "operator": "OR",
+                  "prefix_length": 0,
+                  "max_expansions": 50,
+                  "fuzzy_transpositions": true,
+                  "lenient": false,
+                  "zero_terms_query": "NONE",
+                  "auto_generate_synonyms_phrase_query": true,
+                  "boost": 1.0
+                }
+              }
+            },
+            {
+              "match": {
+                "restaurant_name": {
+                  "query": "칼국수",
+                  "operator": "AND",
+                  "prefix_length": 0,
+                  "max_expansions": 50,
+                  "fuzzy_transpositions": true,
+                  "lenient": false,
+                  "zero_terms_query": "NONE",
+                  "auto_generate_synonyms_phrase_query": true,
+                  "boost": 5.0
+                }
+              }
+            },
+            {
+              "match_phrase": {
+                "restaurant_name": {
+                  "query": "칼국수",
+                  "slop": 0,
+                  "zero_terms_query": "NONE",
+                  "boost": 25.0
+                }
+              }
+            }
+          ],
+          "adjust_pure_negative": true,
+          "boost": 1.0
+        }
+      },
+      "post_filter": {
+        "bool": {
+          "filter": [
+            {
+              "range": {
+                "longitude": {
+                  "from": 126.93452195073536,
+                  "to": 126.94537104338305,
+                  "include_lower": true,
+                  "include_upper": true,
+                  "boost": 1.0
+                }
+              }
+            },
+            {
+              "range": {
+                "latitude": {
+                  "from": 37.48608721246216,
+                  "to": 37.49363416030283,
+                  "include_lower": true,
+                  "include_upper": true,
+                  "boost": 1.0
+                }
+              }
+            }
+          ],
+          "adjust_pure_negative": true,
+          "boost": 1.0
+        }
+      },
+      "version": true,
+      "explain": false
+    }

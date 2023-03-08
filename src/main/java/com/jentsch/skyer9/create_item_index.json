@@ -1,0 +1,267 @@
+{
+  "settings": {
+    "number_of_shards": 5,
+    "max_ngram_diff": 2,
+    "analysis": {
+      "tokenizer": {
+        "ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": "1",
+          "max_gram": "3",
+          "token_chars": ["letter", "digit", "punctuation", "symbol"]
+        },
+        "unix_path_tokenizer": {
+          "type": "path_hierarchy",
+          "buffer_size": 1024,
+          "replacement": "/",
+          "reverse": "false",
+          "skip": 0,
+          "delimiter": "/"
+        },
+        "whitespace_tokenizer": {
+          "type": "whitespace"
+        },
+        "keyword_tokenizer": {
+          "type": "keyword",
+          "buffer_size": 1024
+        }
+      },
+      "analyzer": {
+        "ngram_analyzer": {
+          "type": "custom",
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "whitespace"
+        },
+        "lowercase_analyzer": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": ["lowercase"]
+        },
+        "directory_path_analyzer": {
+          "type": "custom",
+          "tokenizer": "unix_path_tokenizer"
+        },
+        "whitespace_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace_tokenizer"
+        },
+        "keyword_analyzer": {
+          "type": "custom",
+          "tokenizer": "keyword_tokenizer"
+        }
+      },
+      "normalizer": {
+        "lowercase_normalizer": {
+          "type": "custom",
+          "filter": ["lowercase"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "ngram_analyzer",
+        "fields": {
+          "lowercase": {
+            "type": "keyword",
+            "normalizer": "lowercase_normalizer"
+          }
+        }
+      },
+      "path": {
+        "type": "text",
+        "analyzer": "directory_path_analyzer",
+        "fields": {
+          "full": {
+            "type": "keyword"
+          }
+        }
+      },
+      "originalSize": {
+        "type": "double",
+        "store": "true"
+      },
+      "assetCategory": {
+        "type": "text",
+        "analyzer": "keyword_analyzer",
+        "search_analyzer": "whitespace_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "mimetype": {
+        "type": "keyword"
+      },
+      "importedBy": {
+        "type": "integer",
+        "store": "true"
+      },
+      "updatedBy": {
+        "type": "keyword"
+      },
+      "importedAt": {
+        "type": "date",
+        "store": "true"
+      },
+      "updatedAt": {
+        "type": "date",
+        "store": "true"
+      },
+      "fileCreatedAt": {
+        "type": "date",
+        "store": "true"
+      },
+      "fileUpdatedAt": {
+        "type": "date",
+        "store": "true"
+      },
+      "metadataSet": {
+        "type": "long"
+      },
+      "instanceId": {
+        "type": "keyword"
+      },
+      "referenceId": {
+        "type": "keyword"
+      },
+      "cutComment": {
+        "type": "text",
+        "analyzer": "ngram_analyzer",
+        "fields": {
+          "lowercase": {
+            "type": "text",
+            "analyzer": "lowercase_analyzer"
+          }
+        }
+      },
+      "comment": {
+        "properties": {
+          "userId": {
+            "type": "long"
+          },
+          "value": {
+            "type": "text",
+            "analyzer": "ngram_analyzer",
+            "fields": {
+              "lowercase": {
+                "type": "text",
+                "analyzer": "lowercase_analyzer"
+              }
+            }
+          },
+          "updatedAt": {
+            "type": "date"
+          }
+        }
+      },
+      "content": {
+        "type": "text",
+        "analyzer": "ngram_analyzer"
+      },
+      "shadow": {
+        "type": "boolean",
+        "store": "true"
+      },
+      "shadowUpdatedAt": {
+        "type": "date",
+        "store": "true"
+      },
+      "downloadValue": {
+        "type": "long"
+      },
+      "collection": {
+        "type": "long"
+      },
+      "sha1": {
+        "type": "keyword"
+      },
+      "subtitle": {
+        "type": "text",
+        "analyzer": "ngram_analyzer"
+      },
+      "videoOcr": {
+        "type": "text",
+        "analyzer": "ngram_analyzer"
+      },
+      "version": {
+        "type": "long"
+      }
+    },
+    "dynamic_templates": [
+      {
+        "cmeta_str": {
+          "match": "cmeta_str-*",
+          "mapping": {
+            "type": "text",
+            "store": "true",
+            "analyzer": "ngram_analyzer",
+            "fields": {
+              "lowercase": {
+                "type": "keyword",
+                "normalizer": "lowercase_normalizer"
+              }
+            }
+          }
+        }
+      },
+      {
+        "cmeta_select": {
+          "match": "cmeta_select-*",
+          "mapping": {
+            "type": "text",
+            "store": "true",
+            "analyzer": "ngram_analyzer",
+            "fields": {
+              "lowercase": {
+                "type": "keyword",
+                "normalizer": "lowercase_normalizer"
+              }
+            }
+          }
+        }
+      },
+      {
+        "cmeta_bool": {
+          "match": "cmeta_bool-*",
+          "mapping": {
+            "type": "boolean",
+            "store": "true"
+          }
+        }
+      },
+      {
+        "cmeta_double": {
+          "match": "cmeta_double-*",
+          "mapping": {
+            "type": "double",
+            "store": "true"
+          }
+        }
+      },
+      {
+        "cmeta_date": {
+          "match": "cmeta_date-*",
+          "mapping": {
+            "type": "date",
+            "store": "true"
+          }
+        }
+      },
+      {
+        "cmeta_multi_label": {
+          "match": "cmeta_multi_label-*",
+          "mapping": {
+            "type": "long",
+            "store": "true"
+          }
+        }
+      }
+    ]
+  }
+}

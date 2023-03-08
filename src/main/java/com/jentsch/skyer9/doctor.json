@@ -1,0 +1,65 @@
+{
+  "emr-api-symptomtypes": {
+    "mappings": {
+      "emr-api-symptomtype": {
+        "properties": {
+          "creationTime": {
+            "type": "date"
+          },
+          "doctorInClinicId": {
+            "type": "long"
+          },
+          "id": {
+            "type": "long"
+          },
+          "specialities": {
+            "type": "nested",
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "name": {
+                "type": "text",
+                "analyzer": "standard",
+                "fielddata": true
+              }
+            }
+          },
+          "symptomId": {
+            "type": "long"
+          },
+          "symptomType": {
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "symptomTypeName": {
+            "type": "text"
+          },
+          "symptomTypes": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "name": {
+                "type": "text",
+                "analyzer": "standard",
+                "fielddata": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

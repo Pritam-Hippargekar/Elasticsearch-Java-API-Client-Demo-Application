@@ -29,9 +29,15 @@ public class ElasticsearchJavaClient {
     private String password;
 
     @Bean
-    public ElasticsearchClient getElasticSearchClient() {
+    public ElasticsearchClient getElasticSearchJavaApiClient() {
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+
+//        RestClientBuilder builder = RestClient.builder(httpHost)
+//                .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
+//                        .setSSLContext(sslContext)
+//                        .setDefaultCredentialsProvider(credentialsProvider)
+//                        .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE));
 
         RestClientBuilder builder = RestClient.builder(new HttpHost(hostName, port))
                 .setHttpClientConfigCallback(httpClientBuilder ->  httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
@@ -40,8 +46,15 @@ public class ElasticsearchJavaClient {
 //                    httpClientBuilder.disableAuthCaching();  //Disable preemptive authentication
 //                   return  httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider)
 //                });
+
         // Create the low-level client
         RestClient restClient = builder.build();
+//        ObjectMapper mapper = new ObjectMapper()
+//                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+//                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+//                .registerModule(new JavaTimeModule());
+//        ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper(mapper));
+
         // Create the transport with a Jackson mapper
         ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
         // And create the API client

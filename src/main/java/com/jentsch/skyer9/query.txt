@@ -1,0 +1,106 @@
+https://www.cnblogs.com/wuyongyin/p/16399197.html
+============================
+@Test
+ public  void searchBool() throws IOException {
+     // Query success contains "thought" and the document age is between [20-40]
+    SearchResponse<Poet> response = client.search(searchRequestBuilder -> searchRequestBuilder
+            .index(INDEX_NAME)
+            .query(queryBuilder -> queryBuilder
+                    .bool(boolQueryBuilder -> boolQueryBuilder
+                            .must(queryBuilder2 -> queryBuilder2
+                                    .match(matchQueryBuilder -> matchQueryBuilder
+                                            .field( "success").query("thought" ))
+                            )
+                            .must(queryBuilder2 -> queryBuilder2
+                                    .range(rangeQueryBuilder -> rangeQueryBuilder
+                                            .field( "age").gte(JsonData.of("20")).lt(JsonData.of("40" )))
+                            )
+                    )
+            )
+    , Poet. class );
+    logger.info(response.toString());
+
+    // Filter out the documents whose success contains "thought" and whose age is between [20-40], do not calculate the score
+    SearchResponse<Poet> response2 = client.search(searchRequestBuilder -> searchRequestBuilder
+            .index(INDEX_NAME)
+            .query(queryBuilder -> queryBuilder
+                    .bool(boolQueryBuilder -> boolQueryBuilder
+                            .filter(queryBuilder2 -> queryBuilder2
+                                    .match(matchQueryBuilder -> matchQueryBuilder
+                                            .field( "success").query("thought" ))
+                            )
+                            .filter(queryBuilder2 -> queryBuilder2
+                                    .range(rangeQueryBuilder -> rangeQueryBuilder
+                                            .field( "age").gte(JsonData.of("20")).lt(JsonData.of("40" )))
+                            )
+                    )
+            )
+    , Poet. class );
+    logger.info(response2.toString());
+}
+===========================
+@Test
+ public  void searchAggs() throws IOException {
+     // Summation
+    SearchResponse<Poet> response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .aggregations( "age_sum", aggregationBuilder -> aggregationBuilder
+                            .sum(sumAggregationBuilder -> sumAggregationBuilder
+                                    .field( "age" )))
+            , Poet. class );
+    logger.info(response.toString());
+
+    // similar to select count distinct(age) from poet-index
+    response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .aggregations( "age_count", aggregationBuilder -> aggregationBuilder
+                            .cardinality(cardinalityAggregationBuilder -> cardinalityAggregationBuilder.field("age" )))
+            , Poet. class );
+    logger.info(response.toString());
+
+    // Quantity, maximum, minimum, average, sum
+    response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .aggregations( "age_stats", aggregationBuilder -> aggregationBuilder
+                            .stats(statsAggregationBuilder -> statsAggregationBuilder
+                                    .field( "age" )))
+            , Poet. class );
+    logger.info(response.toString());
+
+    // select name,count(*) from poet-index group by name
+    response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .aggregations( "name_terms", aggregationBuilder -> aggregationBuilder
+                            .terms(termsAggregationBuilder -> termsAggregationBuilder
+                                    .field( "name" )))
+            , Poet. class );
+    logger.info(response.toString());
+
+    // select name,age,count(*) from poet-index group by name,age
+    response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .aggregations( "name_terms", aggregationBuilder -> aggregationBuilder
+                            .terms(termsAggregationBuilder -> termsAggregationBuilder
+                                    .field( "name" )
+                            )
+                            .aggregations( "age_terms", aggregationBuilder2 -> aggregationBuilder2
+                                    .terms(termsAggregationBuilder -> termsAggregationBuilder
+                                            .field( "age" )
+                                    ))
+                    )
+            , Poet. class );
+    logger.info(response.toString());
+
+    // similar to select avg(age) from poet-index where name='Li Bai'
+    response = client.search(searchRequestBuilder -> searchRequestBuilder
+                    .index(INDEX_NAME)
+                    .query(queryBuilder -> queryBuilder
+                            .bool(boolQueryBuilder -> boolQueryBuilder
+                                    .filter(queryBuilder2 -> queryBuilder2
+                                            .term(termQueryBuilder -> termQueryBuilder
+                                                    .field( "name").value("Li Bai" )))))
+                    .aggregations( "ave_age", aggregationBuilder -> aggregationBuilder
+                            .avg(averageAggregationBuilder -> averageAggregationBuilder. field("age" )))
+            , Poet. class );
+    logger.info(response.toString());
+}
