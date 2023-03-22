@@ -1,0 +1,672 @@
+{
+  "emr-api-doctors": {
+    "mappings": {
+      "emr-api-doctor": {
+        "properties": {
+          "about": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          },
+          "aboutDoctor": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "affiliation": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "awards": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "text",
+            "analyzer": "standard",
+            "fielddata": true
+          },
+          "count": {
+            "type": "long"
+          },
+          "dateofbirth": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "doctorInClinicForNow": {
+            "type": "boolean"
+          },
+          "doctorInClinicForToday": {
+            "type": "boolean"
+          },
+          "doctorInClinics": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "canCallPatient": {
+                "type": "boolean"
+              },
+              "chamberIn": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "clinic": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "address": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "city": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "cluster": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "id": {
+                    "type": "long"
+                  },
+                  "isHospital": {
+                    "type": "boolean"
+                  },
+                  "isTest": {
+                    "type": "boolean"
+                  },
+                  "lastModified": {
+                    "type": "date"
+                  },
+                  "latitude": {
+                    "type": "float"
+                  },
+                  "location": {
+                    "type": "geo_point"
+                  },
+                  "longitude": {
+                    "type": "float"
+                  },
+                  "name": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "phoneNumber": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "r": {
+                    "type": "long"
+                  },
+                  "slug": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "unit": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  }
+                }
+              },
+              "clinicTimingForNow": {
+                "type": "boolean"
+              },
+              "clinicTimingForToday": {
+                "type": "boolean"
+              },
+              "clinicTimings": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "afternoon": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "closedAfternoon": {
+                    "type": "boolean"
+                  },
+                  "closedEvening": {
+                    "type": "boolean"
+                  },
+                  "closedMorning": {
+                    "type": "boolean"
+                  },
+                  "closedNight": {
+                    "type": "boolean"
+                  },
+                  "day": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "evening": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "morning": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "night": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "timeSlotForNow": {
+                    "type": "boolean"
+                  },
+                  "timeSlotForToday": {
+                    "type": "boolean"
+                  },
+                  "timeSlots": {
+                    "type": "nested",
+                    "properties": {
+                      "dayInterval": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "dayOfWeek": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "end": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "hours": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "long"
+                      },
+                      "start": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "consultationFee": {
+                "type": "float"
+              },
+              "econsultationFee": {
+                "type": "long"
+              },
+              "id": {
+                "type": "long"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "isAvailableAtClinic": {
+                "type": "boolean"
+              },
+              "isAvailableOnline": {
+                "type": "boolean"
+              },
+              "isListed": {
+                "type": "boolean"
+              },
+              "metaDescription": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "metaKeywords": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "metaTitle": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "usingMeddoLite": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": "long"
+              },
+              "visitEndTime": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "visitStartTime": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "experience": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "healthProblemTagsForDoctor": {
+            "type": "nested",
+            "include_in_root": true
+          },
+          "id": {
+            "type": "long"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isCamp": {
+            "type": "boolean"
+          },
+          "isTest": {
+            "type": "boolean"
+          },
+          "lastModified": {
+            "type": "date"
+          },
+          "medicalRegistration": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "phone": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "popularity": {
+            "type": "long"
+          },
+          "professionalExperience": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "professionalMemberships": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "profilePic": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "qualificationHighlight": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "qualifications": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "qualificationsDetail": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "description": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "id": {
+                "type": "long"
+              },
+              "year": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "rating": {
+            "type": "long"
+          },
+          "registrationNumber": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "slug": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "speciality": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "isDeleted": {
+                "type": "boolean"
+              },
+              "lastModified": {
+                "type": "date"
+              },
+              "name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                },
+                "analyzer": "standard",
+                "fielddata": true
+              },
+              "version": {
+                "type": "long"
+              }
+            }
+          },
+          "version": {
+            "type": "long"
+          }
+        }
+      }
+    }
+  }
+}

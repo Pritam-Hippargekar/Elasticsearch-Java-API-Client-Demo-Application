@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "productId":    { "type": "long"  },
+    "price":        { "type": "float" },
+    "stocks":       { "type": "integer" },
+    "description":  { "type": "text" },
+    "active":       { "type": "boolean" },
+    "createdAt":    { "type": "date" },
+    "updatedAt":    { "type": "date" },
+    "location":     { "type" : "geo_point" },
+    "productName": {
+      "type": "text",
+      "fields": {
+        "keyword": { "type": "keyword", "ignore_above": 256 }
+      }
+    },
+    "category": {
+      "type": "nested",
+      "properties": {
+        "categoryId":  { "type": "long" },
+        "categoryName":{ "type": "text" }
+      }
+    }
+  }
+}

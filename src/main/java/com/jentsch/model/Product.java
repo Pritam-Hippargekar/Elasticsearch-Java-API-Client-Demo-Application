@@ -3,30 +3,22 @@ package com.jentsch.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 public class Product {
-    private Long id;
-    private String name;
-    private Double price;
+    private Long productId;
+    private String productName;
+    private BigDecimal price;
     private String description;
-    private Long stocks;
+    private Integer stocks;
+    private Boolean active;
+    private GeoLocation location;
     private Date createdAt;
     private Date updatedAt;
-
-    public static Map<String, Object> getConditionMap(Product product) {
-        Map<String, Object> conditionMap = new HashMap<>();
-        conditionMap.put("id", product.getId());
-        conditionMap.put("name", product.getName());
-        conditionMap.put("price", product.getPrice());
-        conditionMap.put("description", product.getDescription());
-        conditionMap.put("stocks", product.getStocks());
-        conditionMap.put("createdAt", product.getCreatedAt());
-        conditionMap.put("updatedAt", product.getUpdatedAt());
-        return conditionMap;
-    }
 }
