@@ -101,7 +101,7 @@ public class JavaClientProductConnector {
 //            propertyMap.put("date", new Property(new DateProperty.Builder().index(true).store(true).build()));
                 propertyMap.put("id", new Property(new LongNumberProperty.Builder().index(true).store(true).build()));
                 propertyMap.put("active", new Property(new BooleanProperty.Builder().index(true).store(true).build()));
-                propertyMap.put("name", new Property(new TextProperty.Builder().index(true).analyzer("ik_max_word").store(true).build()));
+                propertyMap.put("name", new Property(new TextProperty.Builder().index(true).analyzer("ik_max_word").searchAnalyzer("ik_max_word").store(true).build()));
         }
     }
 
