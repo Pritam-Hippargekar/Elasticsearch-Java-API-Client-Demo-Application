@@ -29,6 +29,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -105,7 +106,9 @@ public class JavaClientProductConnector {
         }
     }
 
-
+//    Property keywordProperty = Property.of(pBuilder -> pBuilder.keyword(kBuilder -> kBuilder.ignoreAbove(256)));
+//    Property textProperty = Property.of(pBuilder -> pBuilder.text(tBuilder -> tBuilder));
+//    Property integerProperty = Property.of(pBuilder -> pBuilder.integer(iBuilder -> iBuilder));
 
     public boolean createIndex(String indexName, String aliasesName, int numOfShards,int numOfReplicas, Map<String, Property> properties) {
         try {
@@ -118,6 +121,19 @@ public class JavaClientProductConnector {
                     .settings(indexSettings)
                     .build();
             CreateIndexResponse response = elasticsearchClient.indices().create(createIndexRequest);
+
+//   https://cloud.tencent.com/developer/article/2099424
+//            CreateIndexRequest request = CreateIndexRequest.of(builder -> builder
+//                    .index(indexName)
+//                    .withJson(new InputStream() {
+//                        @Override
+//                        public int read() throws IOException {
+//                            return 0;
+//                        }
+//                    }));
+
+
+
             return response.acknowledged();
         } catch (IOException e) {
 //            logger.error("There is an error while creating index", e);
