@@ -105,11 +105,12 @@ public class JavaClientProductConnector {
                 propertyMap.put("name", new Property(new TextProperty.Builder().index(true).analyzer("ik_max_word").searchAnalyzer("ik_max_word").store(true).build()));
         }
     }
-
+//   https://realkoy.tistory.com/entry/elasticsearch-8x-Java-api-client%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-IndexTemplate-%EC%83%9D%EC%84%B1
 //    Property keywordProperty = Property.of(pBuilder -> pBuilder.keyword(kBuilder -> kBuilder.ignoreAbove(256)));
 //    Property textProperty = Property.of(pBuilder -> pBuilder.text(tBuilder -> tBuilder));
 //    Property integerProperty = Property.of(pBuilder -> pBuilder.integer(iBuilder -> iBuilder));
-
+//    put("id", new Property(new DateProperty.Builder().index(true).store(true).build()));
+// kafka project == a simple e-mailing micro-service with Spring Boot and running on a Kafka infrastructure. (https://github.com/felixzero/messaging_microservice_kafka)
     public boolean createIndex(String indexName, String aliasesName, int numOfShards,int numOfReplicas, Map<String, Property> properties) {
         try {
             TypeMapping typeMapping = new TypeMapping.Builder().properties(properties).build();
@@ -141,6 +142,23 @@ public class JavaClientProductConnector {
         return false;
     }
 
+//    private void createIndex(String index) throws IOException {
+//
+//        CreateIndexRequest.Builder indexBuilder = new CreateIndexRequest.Builder();
+//        indexBuilder.index(index);
+//        TypeMapping.Builder tmBuilder = new TypeMapping.Builder();
+//        tmBuilder.properties("vec", new Property.Builder().denseVector(builder -> builder.index(true).dims(64).similarity("dot_product")
+//                .indexOptions(opBuilder -> opBuilder.type("hnsw").m(16).efConstruction(100))).build());
+//        tmBuilder.properties("id", new Property.Builder().long_(pb -> pb.index(false)).build());
+//        TypeMapping typeMapping = tmBuilder.build();
+//        indexBuilder.mappings(typeMapping);
+//        CreateIndexResponse createIndexResponse = esClient.indices().create(indexBuilder.build());
+//
+//        String resIndex = createIndexResponse.index();
+//        Boolean acknowledged = createIndexResponse.acknowledged();
+//        boolean b = createIndexResponse.shardsAcknowledged();
+//        log.info("index create response for {}, acknowledged= {}, shardsAcknowledged= {}", resIndex, acknowledged, b);
+//    }
 
 //    public IndexResponse createIndex(String index, String type, String id, Object source) throws Exception{
 //        IndexRequest request = new IndexRequest(index, type, id).source(JSON.toJSONString(source), XContentType.JSON);
