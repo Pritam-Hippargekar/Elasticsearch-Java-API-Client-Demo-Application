@@ -269,3 +269,71 @@
 //        }
 //    }
 //}
+
+
+
+// "name":{
+//         "type": "text",
+//         "analyzer" : "standard"
+// },
+// "address": {
+//     "type" : "text",
+//     "fields":{
+//         "keyword":{
+//         "type" : "keyword",
+//         "ignore_above":  256
+//         }
+//     }
+// }
+
+//
+//{
+//        "query": {
+//        "bool": {
+//        "must": [
+//        { "match": { "professor.facutly_type": "full-time" }},
+//        { "match": { "professor.department": "finance" }}
+//        ],
+//        "must_not": [
+//        { "match": { "course_description": "business" }}
+//        ],
+//        "filter": [
+//        { "range":  { "students_enrolled": { "gte": 16 }}}
+//        ]
+//        }
+//        }
+//        }
+
+
+//
+//{
+//        "query": {
+//        "bool": {
+//        "must": [
+//        {
+//        "match": {
+//        "name": "accounting"
+//        }
+//        }
+//        ],
+//        "must_not": [
+//        {
+//        "match": {
+//        "room": "e7"
+//        }
+//        }
+//        ],
+//        "should": [
+//        {
+//        "range": {
+//        "students_enrolled": {
+//        "gte": 10,
+//        "lte": 20
+//        }
+//        }
+//        }
+//        ],
+//        "minimum_should_match": 1
+//        }
+//        }
+//        }
